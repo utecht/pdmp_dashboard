@@ -22,12 +22,19 @@ info.onAdd = function (map) {
 
 info.update = function (props) {
 	this._div.innerHTML = '<h4>Arkansas County Population Density</h4>' +  (props ?
-		'<b>' + props.NAME + '</b><br />' + calculate_density(props.NAME, props.ALAND).toFixed(2) + ' people / km<sup>2</sup>'
+		'<b>' + props.NAME + '</b><br />' + calculate_density(props.NAME, props.ALAND).toFixed(2) + ' people / km<sup>2</sup>' + '</b><br />' + covidCases(props.NAME) + ' cases / ' + covidDeaths(props.NAME) + ' deaths'
 		: 'Hover over a state');
 };
 
 info.addTo(map);
 
+function covidCases(name){
+	return covid_nums[name]['cases'];
+}
+
+function covidDeaths(name){
+	return covid_nums[name]['deaths'];
+}
 
 // get color depending on population density value
 function getColor(d) {
