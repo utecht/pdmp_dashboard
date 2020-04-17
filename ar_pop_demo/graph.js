@@ -75,8 +75,8 @@ function getData(county){
 }
 
 function deleteCounty(county){
-  d3.select("#"+county+"_CASES").remove();
-  d3.select("#"+county+"_DEATHS").remove();
+  d3.select("#COUNTY_CASES").remove();
+  d3.select("#COUNTY_DEATHS").remove();
 }
 
 function showCounty(county){
@@ -91,7 +91,7 @@ function showCounty(county){
   let data = getData(county);
   svg.append("path")
   .datum(data)
-  .attr("id", county+"_CASES")
+  .attr("id", "COUNTY_CASES")
   .attr("fill", "none")
   .attr("stroke", "gray")
   .attr("stroke-width", 1.5)
@@ -101,7 +101,7 @@ function showCounty(county){
     )
   svg.append("path")
   .datum(data)
-  .attr("id", county+"_DEATHS")
+  .attr("id", "COUNTY_DEATHS")
   .attr("fill", "none")
   .attr("stroke", "purple")
   .attr("stroke-width", 1.5)
