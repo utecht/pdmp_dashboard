@@ -96,7 +96,7 @@ function highlightFeature(e) {
 	}
 
 	info.update(layer.feature.properties);
-	showCounty(layer.feature.properties.NAME);
+	showCounty(layer.feature.properties.NAME, false);
 }
 
 var geojson;
@@ -107,15 +107,15 @@ function resetHighlight(e) {
 	deleteCounty(e.target.feature.properties.NAME);
 }
 
-function zoomToFeature(e) {
-	map.fitBounds(e.target.getBounds());
+function showFeature(e) {
+	showCounty(e.target.feature.properties.NAME, true);
 }
 
 function onEachFeature(feature, layer) {
 	layer.on({
 		mouseover: highlightFeature,
-		mouseout: resetHighlight
-		//click: zoomToFeature
+		mouseout: resetHighlight,
+		click: showFeature
 	});
 }
 

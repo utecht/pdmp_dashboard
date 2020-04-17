@@ -17,6 +17,11 @@ function make_chart(data){
     return d3.ascending(x.date, y.date);
   });
   // Add X axis --> it is a date format
+  svg.append("circle").attr("cx",20).attr("cy",30).attr("r", 6).style("fill", "steelblue")
+  svg.append("circle").attr("cx",20).attr("cy",60).attr("r", 6).style("fill", "red")
+  svg.append("text").attr("x", 40).attr("y", 30).text("Cases").style("font-size", "15px").attr("alignment-baseline","middle")
+  svg.append("text").attr("x", 40).attr("y", 60).text("Deaths").style("font-size", "15px").attr("alignment-baseline","middle")
+
   var x = d3.scaleTime()
     .domain(d3.extent(data, function(d) { return d.date; }))
     .range([ 0, width ]);
@@ -79,7 +84,7 @@ function deleteCounty(county){
   d3.select("#COUNTY_DEATHS").remove();
 }
 
-function showCounty(county){
+function showCounty(county, keep){
   let all_data = getData(undefined);
   var x = d3.scaleTime()
     .domain(d3.extent(all_data, function(d) { return d.date; }))
@@ -88,10 +93,14 @@ function showCounty(county){
     .domain([0, d3.max(all_data, function(d) { return +d.cases; })])
     .range([ height, 0 ]);
 
+  var id = "COUNTY_CASES";
+  if(keep){
+    id = "KEEPER_CASES";
+  }
   let data = getData(county);
   svg.append("path")
   .datum(data)
-  .attr("id", "COUNTY_CASES")
+  .attr("id", id)
   .attr("fill", "none")
   .attr("stroke", "gray")
   .attr("stroke-width", 1.5)
@@ -99,9 +108,13 @@ function showCounty(county){
     .x(function(d) { return x(d.date) })
     .y(function(d) { return y(d.cases) })
     )
+  id = "COUNTY_DEATHS";
+  if(keep){
+    id = "KEEPER_DEATHS";
+  }
   svg.append("path")
   .datum(data)
-  .attr("id", "COUNTY_DEATHS")
+  .attr("id", id)
   .attr("fill", "none")
   .attr("stroke", "purple")
   .attr("stroke-width", 1.5)
