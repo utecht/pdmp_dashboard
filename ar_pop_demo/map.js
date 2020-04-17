@@ -133,7 +133,7 @@ legend.onAdd = function (map) {
 
 	var div = L.DomUtil.create('div', 'info legend'),
 		grades = [0, 4, 7, 10, 20, 50, 100, 150],
-		labels = [],
+		labels = ["Population Density", "People / km<sup>2</sup>"],
 		from, to;
 
 	for (var i = 0; i < grades.length; i++) {
