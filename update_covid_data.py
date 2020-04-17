@@ -32,4 +32,4 @@ for county in counties:
     county_data['deaths'] = todays_data['deaths']
     output[county] = county_data
 
-print(json.dumps(output))
+print("var covid_nums = {};".format(json.dumps(output)))

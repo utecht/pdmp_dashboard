@@ -1,4 +1,4 @@
-var map = L.map('mapid').setView([34.4, -92], 7);
+var map = L.map('mapid').setView([34.8, -92], 7);
 
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoianJ1dGVjaHQiLCJhIjoiY2s5MW1pZXRlMDFsYTNlcWtpd3FnaW94dSJ9.gPjvytkePOl3Q9xWDj-Iiw', {
 	maxZoom: 18,
@@ -10,6 +10,10 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 	zoomOffset: -1
 }).addTo(map);
 
+map.dragging.disable();
+map.touchZoom.disable();
+map.doubleClickZoom.disable();
+map.scrollWheelZoom.disable();
 
 // control that shows state info on hover
 var info = L.control();
@@ -29,11 +33,25 @@ info.update = function (props) {
 info.addTo(map);
 
 function covidCases(name){
+	if(!covid_nums.hasOwnProperty(name)){
+		return 0;
+	}
 	return covid_nums[name]['cases'];
 }
 
 function covidDeaths(name){
+	if(!covid_nums.hasOwnProperty(name)){
+		return 0;
+	}
 	return covid_nums[name]['deaths'];
+}
+
+function totalNumber(type){
+	total = 0;
+	for(const county in covid_nums){
+		total += parseInt(covid_nums[county][type]);
+	}
+	return total;
 }
 
 // get color depending on population density value
@@ -78,6 +96,7 @@ function highlightFeature(e) {
 	}
 
 	info.update(layer.feature.properties);
+	showCounty(layer.feature.properties.NAME);
 }
 
 var geojson;
@@ -85,6 +104,7 @@ var geojson;
 function resetHighlight(e) {
 	geojson.resetStyle(e.target);
 	info.update();
+	deleteCounty(e.target.feature.properties.NAME);
 }
 
 function zoomToFeature(e) {
@@ -94,8 +114,8 @@ function zoomToFeature(e) {
 function onEachFeature(feature, layer) {
 	layer.on({
 		mouseover: highlightFeature,
-		mouseout: resetHighlight,
-		click: zoomToFeature
+		mouseout: resetHighlight
+		//click: zoomToFeature
 	});
 }
 
@@ -130,3 +150,9 @@ legend.onAdd = function (map) {
 };
 
 legend.addTo(map);
+
+const tot_cases = document.getElementById("tot_cases");
+const tot_deaths = document.getElementById("tot_deaths");
+
+tot_cases.innerHTML = tot_cases.innerHTML + " " + totalNumber("cases");
+tot_deaths.innerHTML = tot_deaths.innerHTML + " " + totalNumber("deaths");
