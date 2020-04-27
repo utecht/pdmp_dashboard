@@ -22,10 +22,15 @@ export class InfoBox extends Component {
 }
 
 export class ARMap extends Component {
-	state = {
-		selected_name: null,
-		selected_aland: null
+	constructor(props){
+		super();
+		this.changeCounty = props.changeCounty;
+		this.state = {
+			selected_name: null,
+			selected_aland: null
+		}
 	}
+
 	// get color depending on population density value
 	static getColor(d) {
 		return d > 150 ? '#800026' :
@@ -58,6 +63,7 @@ export class ARMap extends Component {
 			selected_name: e.layer.feature.properties.NAME,
 			selected_aland: e.layer.feature.properties.ALAND
 		});
+		this.changeCounty(e.layer.feature.properties.NAME);
 	}
 
 	resetFeature = e => {
@@ -65,6 +71,7 @@ export class ARMap extends Component {
 			selected_name: null,
 			selected_aland: null
 		});
+		this.changeCounty(undefined);
 	}
 
 	render(){
@@ -76,6 +83,7 @@ export class ARMap extends Component {
 				touchZoom={false}
 				doubleClickZoom={false}
 				scrollWheelZoom={false}
+				zoomControl={false}
 				zoom={7}>
 				<TileLayer
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
