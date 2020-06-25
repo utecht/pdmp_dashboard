@@ -1,7 +1,8 @@
 import { Component } from 'preact';
-import { DEATHS_PER_MONTH } from './deaths_per_month';
+//import { DEATHS_PER_MONTH } from './deaths_per_month';
 import * as d3 from 'd3';
 import './graph_style';
+import 'whatwg-fetch'
 
 export class Graph extends Component {
 	constructor(props){
@@ -9,26 +10,11 @@ export class Graph extends Component {
 		var margin = {top: 10, right: 30, bottom: 30, left: 60},
 		    width = props.width - margin.left - margin.right,
 		    height = props.height - margin.top - margin.bottom;
-		let data = Graph.getData(props.county).sort(function(x, y){
-	    return d3.ascending(x.date, y.date);
-	  });
 		this.changeMonth = props.changeMonth;
 		this.state = { county: props.county,
-									 data: data,
+									 fetching: false,
 									 height: height,
 									 width: width };
-	}
-
-	static getData(county){
-	  var data = [];
-	  for(const month of DEATHS_PER_MONTH){
-			if(typeof county != 'undefined' && month['county'] == county.toUpperCase()){
-		    data.push({date: Date.parse(month['date']),
-								   date_string: month['date'],
-									 deaths: month['deaths']});
-			}
-	  }
-	  return data;
 	}
 
 	mouseOverBar = e => {
@@ -37,12 +23,33 @@ export class Graph extends Component {
 	}
 
 	render(props){
-		if(props.county != this.state.county){
-			this.setState({ data: Graph.getData(props.county).sort(function(x, y){
-													    return d3.ascending(x.date, y.date);
-													  }),
-											county: props.county
-										});
+		if(props.county == undefined){
+			return(<span>Hover over a county.</span>);
+		}
+		if(props.county != this.state.county && this.state.fetching == false){
+			this.setState({ fetching: true });
+			window.fetch("http://localhost:8080/api?county=" + props.county)
+				    .then(response => response.json())
+						.then(data =>
+							this.setState({
+								data: data.map(d => {
+										let newD = {};
+										newD['date'] = Date.parse(d.date);
+										newD['date_string'] =  d.date;
+										newD['deaths'] = d.deaths;
+									  return newD;
+									 })
+									.sort(function(x, y){
+									   return d3.ascending(x.date, y.date);
+								  }),
+								county: props.county,
+								fetching: false
+							})
+						);
+			return(<span>fetching......</span>);
+		}
+		if(this.state.fetching){
+			return(<span>fetching......</span>);
 		}
 	  const xScale = d3.scaleTime()
 	    .domain(d3.extent(this.state.data, function(d) { return d.date; }))
