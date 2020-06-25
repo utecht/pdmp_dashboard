@@ -28,7 +28,7 @@ export class Graph extends Component {
 		}
 		if(props.county != this.state.county && this.state.fetching == false){
 			this.setState({ fetching: true });
-			window.fetch("http://localhost:8080/api?county=" + props.county)
+			window.fetch("http://pdmp-dbmi-1.ad.uams.edu/api?county=" + props.county)
 				    .then(response => response.json())
 						.then(data =>
 							this.setState({
