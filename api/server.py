@@ -30,3 +30,22 @@ def index(county:str):
                     order by 3,2,1) foo""", (county.upper(),))
     results = cur.fetchall()
     return results
+
+class CauseRecord(BaseModel):
+    code: str
+    description: str
+    count: int
+    class Config:
+        orm_mode = True
+
+@app.get("/api/cause", response_model=List[CauseRecord])
+def cause(county:str):
+    cur = conn.cursor(cursor_factory=psycopg2.extras.NamedTupleCursor)
+    cur.execute("""select code, description, count(*) from death
+                   join icd10death on cause = code
+                   where county = %s
+                   group by code, description
+                   order by count(*) desc
+                   limit 20""", (county.upper(),))
+    results = cur.fetchall()
+    return results

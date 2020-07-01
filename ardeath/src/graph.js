@@ -7,8 +7,7 @@ import 'whatwg-fetch'
 export class Graph extends Component {
 	constructor(props){
 		super();
-		var margin = {top: 10, right: 30, bottom: 30, left: 60},
-		    width = props.width - margin.left - margin.right,
+		var margin = {top: 10, right: 30, bottom: 30, left: 60}, width = props.width - margin.left - margin.right,
 		    height = props.height - margin.top - margin.bottom;
 		this.changeMonth = props.changeMonth;
 		this.state = { county: props.county,
@@ -28,7 +27,7 @@ export class Graph extends Component {
 		}
 		if(props.county != this.state.county && this.state.fetching == false){
 			this.setState({ fetching: true });
-			window.fetch("http://pdmp-dbmi-1.ad.uams.edu/api?county=" + props.county)
+			window.fetch("http://localhost:8080/api?county=" + props.county)
 				    .then(response => response.json())
 						.then(data =>
 							this.setState({
@@ -59,7 +58,7 @@ export class Graph extends Component {
 	    .domain([0, d3.max(this.state.data, function(d) { return +d.deaths; })])
 	    .range([ this.state.height, 0 ]);
 
-		const dateFormat = d3.timeFormat("%Y-%m-%d");
+		const dateFormat = d3.timeFormat("%Y-%b");
 		const xTicks = xScale.ticks(12).map( value => ({
 			value,
 			xOffset: xScale(value)

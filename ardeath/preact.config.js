@@ -3,7 +3,7 @@ module.exports = function (config) {
     config.devServer.proxy = [
       {
         // proxy requests matching a pattern:
-        path: '/api',
+        path: 'http://localhost:8080/api',
 
         // where to proxy to:
         target: 'http://localhost:8000',

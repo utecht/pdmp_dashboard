@@ -19,14 +19,16 @@ export default class App extends Component {
 		return (
 			<div>
 				<ARMap changeCounty={this.changeCounty}/>
-				<Graph height={400}
-							 width={960}
-							 changeMonth={this.changeMonth}
-							 county={this.state.county}/>
-				<CausePie height={200}
-									width={200}
-									county={this.state.county}
-									month={this.state.month}/>
+				<div class="graphbox">
+					<Graph height={400}
+								 width={900}
+								 changeMonth={this.changeMonth}
+								 county={this.state.county}/>
+					<CausePie height={200}
+										width={400}
+										county={this.state.county}
+										month={this.state.month}/>
+				</div>
 			</div>
 		);
 	}

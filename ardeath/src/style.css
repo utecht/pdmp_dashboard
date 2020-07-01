@@ -29,3 +29,7 @@ h1 {
     margin: 0 0 5px;
     color: #777;
 }
+
+.graphbox {
+	display: flex;
+}
