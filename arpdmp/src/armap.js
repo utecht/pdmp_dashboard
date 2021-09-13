@@ -3,6 +3,7 @@ import '../node_modules/leaflet/dist/leaflet.css';
 import { Component } from 'preact';
 import { Map, TileLayer, GeoJSON } from 'react-leaflet'
 import { THREEZIP } from './3zip';
+import { COUNTY_DATA } from './ar-counties';
 
 export class InfoBox extends Component {
 
@@ -36,6 +37,17 @@ export class ARMap extends Component {
 			dashArray: '1',
 			fillOpacity: 0.7,
 			fillColor: feature.properties.fill
+		};
+	}
+
+	style_county(feature){
+		return {
+			weight: 1,
+			opacity: 0.4,
+			color: 'black',
+			dashArray: '1',
+			fillOpacity: 0.1,
+			fillColor: 'white'
 		};
 	}
 
@@ -79,6 +91,10 @@ export class ARMap extends Component {
 				<TileLayer
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 					attribution="&copy; <a href=&quot;http://osm.org/copyright&quot;>OpenStreetMap</a> contributors"
+				/>
+				<GeoJSON
+					data={COUNTY_DATA}
+					style={this.style_county}
 				/>
 				<GeoJSON
 					data={THREEZIP}

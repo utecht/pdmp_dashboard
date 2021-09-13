@@ -4,7 +4,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  NavLink
 } from "react-router-dom";
 import Interventions from './Interventions';
 import ChartPage from './ChartPage';
@@ -98,34 +99,34 @@ function App() {
 
                 <ul className="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">
                   <li>
-                    <Link to="/" className="nav-link text-secondary link-dark">
+                    <NavLink exact to="/" className="nav-link link-dark" activeClassName="text-info">
                       <HomeIcon className="d-block mx-auto mb-1" width="24" height="24"/>
                       Home
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link to="/" className="nav-link link-dark">
+                    <NavLink to="/dashboard" className="nav-link link-dark" activeClassName="text-info">
                       <DashboardIcon className="d-block mx-auto mb-1" width="24" height="24"/>
                       Dashboard
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link to="/charts" className="nav-link link-dark">
+                    <NavLink to="/charts" className="nav-link link-dark" activeClassName="text-info">
                       <LineChartIcon className="d-block mx-auto mb-1" width="24" height="24"/>
                       Charts
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link to="/interventions" className="nav-link link-dark">
+                    <NavLink to="/interventions" className="nav-link link-dark" activeClassName="text-info">
                       <EducationIcon className="d-block mx-auto mb-1" width="24" height="24"/>
                       Interventions
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link to="/" className="nav-link link-dark">
+                    <NavLink to="/upload" className="nav-link link-dark" activeClassName="text-info">
                       <BxUploadIcon className="d-block mx-auto mb-1" width="24" height="24"/>
                       Upload
-                    </Link>
+                    </NavLink>
                   </li>
                 </ul>
               </div>

@@ -54,6 +54,10 @@ function Interventions() {
     </tr>
   )
 
+
+  const details = <>
+        </>;
+
   return (
     <div>
       <div style={{display: 'flex'}}>
@@ -61,6 +65,10 @@ function Interventions() {
           <MyMap focusCounty={focusCounty} setHover={setHoverCounty}/>
         </div>
         <MyCalendar setHover={setHoverDate} />
+        <div style={{alignSelf: 'center'}}>
+          {hoverCounty !== undefined ? <h3>{hoverCounty} County</h3> : <></>}
+          {hoverDate !== undefined ? <h3>{hoverDate}</h3> : <></>}
+        </div>
       </div>
       <table className="table">
         <thead>
