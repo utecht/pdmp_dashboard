@@ -57,8 +57,8 @@ const MyMap = (props) => {
                 key={geo.rsmKey}
                 geography={geo}
                 fill={cur ? colorScale(cur.value) : '#EEE'}
-                stroke={props.focusCounty === geo.properties.NAME ? '#000': '#FFF'}
-                strokeWidth={props.focusCounty === geo.properties.NAME ? 2: 0}
+                stroke={props.focusCounty === geo.properties.NAME ? '#000': '#222'}
+                strokeWidth={props.focusCounty === geo.properties.NAME ? 2.5: .5}
                 onMouseEnter={() => props.setHover(geo.properties.NAME)}
                 onMouseLeave={() => props.setHover(undefined)}
               />

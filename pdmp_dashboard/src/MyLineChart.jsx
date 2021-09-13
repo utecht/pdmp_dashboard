@@ -22,6 +22,15 @@ const MyLineChart = ({
         element['data'] = arr;
         newData.push(element);
       }
+      newData.sort((a, b) => {
+        if(a.data[0].y > b.data[0].y) {
+            return 1;
+        }
+        if(a.data[0].y < b.data[0].y) {
+            return -1;
+        }
+        return 0;
+      });
       setData(newData);
   }, [unformatted]);
 

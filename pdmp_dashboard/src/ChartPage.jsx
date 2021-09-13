@@ -8,13 +8,13 @@ function ChartPage() {
   return (
     <div style={{display: 'flex', flexDirection: 'column'}}>
       <div style={{alignSelf: 'center'}}>
-        <h2 style={{textAlign: 'start'}}>Drug Class over Time</h2>
+        <h4 style={{textAlign: 'start'}}>Drug Class over Time</h4>
         <div style={{width:'1000px', height:'400px'}}>
           <MyLineChart unformatted={QUARTERS} xAxis="Prescriptions" yAxis="Quarters" />
         </div>
       </div>
       <div style={{alignSelf: 'center'}}>
-        <h2 style={{textAlign: 'start'}}>Opioid Type over Time</h2>
+        <h4 style={{textAlign: 'start'}}>Opioid Type over Time</h4>
         <div style={{width:'1000px', height:'500px'}}>
           <MyLineChart unformatted={DRUGS}
           xAxis="Prescriptions"

@@ -94,7 +94,7 @@ function App() {
               <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <Link to="/" className="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-decoration-none text-dark">
                   <img className="logo" width="50" src="/doh_logo_transparent.png"/>
-                  <span className="title px-3">Opioid Overdose Prediction Dashboard</span>
+                  <span className="fw-light px-3">Opioid Overdose Prediction Dashboard</span>
                 </Link>
 
                 <ul className="nav col-12 col-lg-auto my-2 justify-content-center my-md-0 text-small">

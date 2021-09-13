@@ -59,16 +59,20 @@ function Interventions() {
         </>;
 
   return (
-    <div>
-      <div style={{display: 'flex'}}>
+    <div className="container">
+      <div style={{display: 'flex', justifyContent: 'space-around'}}>
         <div style={{width:'400px', height:'400px'}}>
           <MyMap focusCounty={focusCounty} setHover={setHoverCounty}/>
+          {hoverCounty !== undefined ? <h4>{hoverCounty} County</h4> : <></>}
         </div>
-        <MyCalendar setHover={setHoverDate} />
-        <div style={{alignSelf: 'center'}}>
-          {hoverCounty !== undefined ? <h3>{hoverCounty} County</h3> : <></>}
-          {hoverDate !== undefined ? <h3>{hoverDate}</h3> : <></>}
+        <div>
+          <MyCalendar setHover={setHoverDate} />
         </div>
+      </div>
+      <div style={{display: 'flex', justifyContent: 'space-between'}}>
+        <button className="btn btn-primary">Add Intervention</button>
+        <h4>{data.length} Interventions Logged</h4>
+        <input placeholder="Search"/>
       </div>
       <table className="table">
         <thead>
