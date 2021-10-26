@@ -8,8 +8,10 @@ import {
   NavLink
 } from "react-router-dom";
 import Interventions from './Interventions';
+import Dashboard from './Dashboard';
 import ChartPage from './ChartPage';
 import Home from './Home';
+import Upload from './Upload';
 
 function DashboardIcon(props) {
   return (
@@ -137,8 +139,14 @@ function App() {
           <Route path="/interventions">
             <Interventions />
           </Route>
+          <Route path="/dashboard">
+            <Dashboard />
+          </Route>
           <Route path="/charts">
             <ChartPage />
+          </Route>
+          <Route path="/upload">
+            <Upload />
           </Route>
           <Route path="/">
             <Home />
