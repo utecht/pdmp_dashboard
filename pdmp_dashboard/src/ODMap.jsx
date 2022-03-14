@@ -31,6 +31,7 @@ const ODMap = (props) => {
   }
 
   return (
+    <>
     <ComposableMap projection="geoAlbers" projectionConfig={projectionConfig}>
       <Geographies geography={geoUrl}>
         {({ geographies }) =>
@@ -50,6 +51,11 @@ const ODMap = (props) => {
         }
       </Geographies>
     </ComposableMap>
+    <div style={{width: '130px'}} >
+      <div style={{background: "linear-gradient(.25turn, white, red)", height: '20px', width: '130px', border: '1px black solid'}}></div>
+      <small style={{}}>Average Predicted Overdose Risk</small>
+    </div>
+    </>
   );
 };
 

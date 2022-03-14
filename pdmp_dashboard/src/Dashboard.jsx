@@ -8,13 +8,14 @@ function Dashboard() {
   const [focusCounties, setFocusCounties] = useState([])
 
   const addFocusCounty = (county) => {
-    console.log(county)
-    const index = focusCounties.indexOf(county)
+    var newCounties = [...focusCounties]
+    let index = newCounties.indexOf(county)
     if(index >= 0){
-      setFocusCounties(focusCounties.slice(index, 1))
+      newCounties.splice(index, 1)
+      setFocusCounties(newCounties)
     } else {
-      focusCounties.push(county)
-      setFocusCounties(focusCounties)
+      newCounties.push(county)
+      setFocusCounties(newCounties)
     }
   }
 

@@ -20,7 +20,7 @@ export default function FeatureChart(props) {
     "#ff84d8"
   ]
   return (
-    <ResponsiveContainer width="100%" height={1500 * props.counties.length}>
+    <ResponsiveContainer width="100%" height={1750 * props.counties.length} >
       <BarChart
         data={FEATURES.data}
         layout="vertical"
@@ -35,8 +35,8 @@ export default function FeatureChart(props) {
         <XAxis type="number" allowDataOverflow={true} domain={[0, 1]} />
         <YAxis dataKey="index" type="category" scale="band" width={200} interval={0} />
         <Tooltip />
-        <Legend />
-        { props.counties.map((county, i) => <Bar key={county} dataKey={county} fill={colors[i % colors.length]} />) }
+        <Legend verticalAlign="top" />
+        { props.counties.map((county, i) => <Bar key={county} dataKey={county} fill={colors[i % colors.length]} isAnimationActive={false} /> ) }
       </BarChart>
     </ResponsiveContainer>
   );
