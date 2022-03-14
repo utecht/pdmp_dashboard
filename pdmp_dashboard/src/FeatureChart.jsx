@@ -1,0 +1,43 @@
+import React from "react";
+import FEATURES from './county_features.json';
+
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  ResponsiveContainer
+} from "recharts";
+
+export default function FeatureChart(props) {
+  const colors = [
+    "#0084d8",
+    "#aa84d8",
+    "#33f408",
+    "#ff84d8"
+  ]
+  return (
+    <ResponsiveContainer width="100%" height={1500 * props.counties.length}>
+      <BarChart
+        data={FEATURES.data}
+        layout="vertical"
+        margin={{
+          top: 5,
+          right: 30,
+          left: 20,
+          bottom: 5
+        }}
+      >
+        <CartesianGrid />
+        <XAxis type="number" allowDataOverflow={true} domain={[0, 1]} />
+        <YAxis dataKey="index" type="category" scale="band" width={200} interval={0} />
+        <Tooltip />
+        <Legend />
+        { props.counties.map((county, i) => <Bar key={county} dataKey={county} fill={colors[i % colors.length]} />) }
+      </BarChart>
+    </ResponsiveContainer>
+  );
+}

@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -95,7 +95,7 @@ function App() {
             <div className="container">
               <div className="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
                 <Link to="/" className="d-flex align-items-center my-2 my-lg-0 me-lg-auto text-decoration-none text-dark">
-                  <img className="logo" width="50" src="/doh_logo_transparent.png"/>
+                  <img className="logo" width="50" src="/doh_logo_transparent.png" alt="DOH Logo" />
                   <span className="fw-light px-3">Opioid Overdose Prediction Dashboard</span>
                 </Link>
 

@@ -9,8 +9,6 @@ function Interventions() {
   const [data, setData] = useState([]);
   const [hoverDate, setHoverDate] = useState(undefined);
   const [hoverCounty, setHoverCounty] = useState(undefined);
-  const [focusCounty, setFocusCounty] = useState(undefined);
-  const [focusDate, setFocusDate] = useState(undefined);
 
   useEffect(() => {
     csv("/interventions.csv", (d) => {
@@ -41,28 +39,19 @@ function Interventions() {
           || (row.county === hoverCounty)
           ) 
     }>
-      <td
-        onMouseEnter={()=> setFocusDate(row.day)}
-        onMouseLeave={()=> setFocusDate(undefined)}
-        >{row.day}</td>
-      <td 
-        onMouseEnter={()=> setFocusCounty(row.county)}
-        onMouseLeave={()=> setFocusCounty(undefined)}
-        >{row.county}</td>
+      <td>{row.day}</td>
+      <td>{row.county}</td>
       <td>{row.program} {row.description}</td>
       <td>{row.value}</td>
     </tr>
   )
 
 
-  const details = <>
-        </>;
-
   return (
     <div className="container">
       <div style={{display: 'flex', justifyContent: 'space-around'}}>
         <div style={{width:'400px', height:'400px'}}>
-          <MyMap focusCounty={focusCounty} setHover={setHoverCounty}/>
+          <MyMap setHover={setHoverCounty}/>
           {hoverCounty !== undefined ? <h4>{hoverCounty} County</h4> : <></>}
         </div>
         <div>

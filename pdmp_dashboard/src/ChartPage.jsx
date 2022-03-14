@@ -1,5 +1,5 @@
 import MyLineChart from './MyLineChart';
-import React, { useState, useEffect } from "react";
+import React from "react";
 import QUARTERS from './quarters.json';
 import DRUGS from './drugs.json';
 

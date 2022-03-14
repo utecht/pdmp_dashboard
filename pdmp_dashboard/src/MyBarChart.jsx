@@ -3,12 +3,13 @@ import React, { useState, useEffect } from "react";
 
 const MyBarChart = ({
     data,
+    county,
     colors = 'nivo'}) => {
 
   return (
     <ResponsiveBar
         data={data}
-        keys={[ 'values' ]}
+        keys={[ county ]}
         indexBy="index"
         layout="horizontal"
         margin={{ top: 50, right: 0, bottom: 50, left: 120 }}
@@ -16,6 +17,7 @@ const MyBarChart = ({
         valueScale={{ type: 'symlog', max: 50 }}
         indexScale={{ type: 'band', round: true }}
         valueFormat=" >-.2f"
+        animate={false}
         colors={{ scheme: 'paired' }}
         defs={[
             {

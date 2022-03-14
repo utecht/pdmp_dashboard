@@ -1,29 +1,31 @@
 import './App.css';
-import MyMap from './MyMap';
-import MyBarChart from './MyBarChart';
-import React, { useState, useEffect } from "react";
-import { csv } from "d3-fetch";
-import FEATURES from './features.json';
+import ODMap from './ODMap';
+import React, { useState } from "react";
+import FeatureChart from './FeatureChart';
 
 
 function Dashboard() {
-  const [data, setData] = useState([]);
-  const [hoverDate, setHoverDate] = useState(undefined);
-  const [hoverCounty, setHoverCounty] = useState(undefined);
-  const [focusCounty, setFocusCounty] = useState(undefined);
-  const [focusDate, setFocusDate] = useState(undefined);
+  const [focusCounties, setFocusCounties] = useState([])
+
+  const addFocusCounty = (county) => {
+    console.log(county)
+    const index = focusCounties.indexOf(county)
+    if(index >= 0){
+      setFocusCounties(focusCounties.slice(index, 1))
+    } else {
+      focusCounties.push(county)
+      setFocusCounties(focusCounties)
+    }
+  }
 
   return (
     <div className="container">
       <div style={{display: 'flex', justifyContent: 'space-around'}}>
         <div style={{width:'400px', height:'400px'}}>
-          <MyMap focusCounty={focusCounty} setHover={setHoverCounty}/>
-          {hoverCounty !== undefined ? <h4>{hoverCounty} County</h4> : <></>}
+          <ODMap focusCounties={focusCounties} setFocus={addFocusCounty} />
         </div>
       </div>
-      <div style={{width:'1200px', height:'2000px'}}>
-        <MyBarChart data={FEATURES.data}/>
-      </div>
+      <FeatureChart counties={focusCounties} />
     </div>
   );
 }
