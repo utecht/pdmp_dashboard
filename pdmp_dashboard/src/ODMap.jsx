@@ -23,7 +23,7 @@ const ODMap = (props) => {
   }, [props.filters]);
 
   const colorScale = scaleLinear()
-    .domain([0, .2, .20001])
+    .domain([0, 1, 1.0001])
     // .domain(data.map(d => d.od))
     .range(['white', 'red', 'black'])
 
@@ -47,7 +47,7 @@ const ODMap = (props) => {
                 fill={cur ? colorScale(cur.od) : '#EEE'}
                 stroke={props.focusCounties.indexOf(geo.properties.NAME) >= 0 ? '#000': '#222'}
                 strokeWidth={props.focusCounties.indexOf(geo.properties.NAME) >= 0 ? 2.5: .5}
-                onClick={() => props.setFocus(cur.county)}
+                onClick={() => props.setFocus(geo.properties.NAME)}
               />
             );
           })

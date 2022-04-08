@@ -8,15 +8,16 @@ import { json } from 'd3-fetch';
 function Dashboard() {
   const [focusCounties, setFocusCounties] = useState([])
   const [data, setData] = useState(false)
+  const [count, setCount] = useState(undefined)
   const [minAge, setMinAge] = useState(undefined)
   const [maxAge, setMaxAge] = useState(undefined)
-  const [features, setFeatures] = useState([])
   const [filters, setFilters] = useState({})
 
   useEffect(() => {
     let params = new URLSearchParams(filters).toString()
     json(`/api/chart?${params}`).then((data) => {
-      setData(JSON.parse(data));
+      setData(JSON.parse(data.data))
+      setCount(data.count.toLocaleString())
     });
   }, [filters]);
 
@@ -68,6 +69,7 @@ function Dashboard() {
         </label>
         <input type="submit" value="Filter" />
       </form>
+      <p>Record count: {count}</p>
       <div style={{display: 'flex', justifyContent: 'space-around'}}>
         <div style={{width:'400px', height:'400px'}}>
           <ODMap focusCounties={focusCounties} setFocus={addFocusCounty} filters={filters} />

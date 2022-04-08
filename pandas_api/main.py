@@ -20,8 +20,11 @@ def get_chart(min_age: int = None, max_age: int = None, features: str = None):
         df = df[df['Age'] < max_age]
     if features != None:
         for feature in features.split(';'):
-            df = df[df[feature] == 1]
-    return return_chart(df)
+            if feature != '':
+                df = df[df[feature] == 1]
+    return {
+        'count': len(df),
+        'data': return_chart(df)}
 
 @app.get("/map")
 def get_map(min_age: int = None, max_age: int = None, features: str = None):
@@ -32,7 +35,8 @@ def get_map(min_age: int = None, max_age: int = None, features: str = None):
         df = df[df['Age'] < max_age]
     if features != None:
         for feature in features.split(';'):
-            df = df[df[feature] == 1]
+            if feature != '':
+                df = df[df[feature] == 1]
     return return_map(df)
 
 def return_chart(df):
@@ -42,7 +46,9 @@ def return_chart(df):
         .groupby("patient_county_name")
         .mean()
     )
-    return county_features.transpose().to_json(orient="table")
+    statewide = csv_df.set_index("patient_county_name").loc[:, "high_quant":"male"].mean()
+    all_features = pd.concat([county_features, statewide.to_frame('Statewide').T])
+    return all_features.transpose().to_json(orient="table")
 
 def return_map(df):
     county_risk = df.loc[:, ["patient_county_name", "predicted_probability"]]
