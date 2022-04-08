@@ -9,7 +9,8 @@ const ODMap = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    json("/api/map").then(counties => {
+    let params = new URLSearchParams(props.filters).toString()
+    json(`/api/map?${params}`).then(counties => {
       var data = [];
       for(let county of counties){
         data.push({
@@ -19,7 +20,7 @@ const ODMap = (props) => {
       }
       setData(data);
     });
-  }, []);
+  }, [props.filters]);
 
   const colorScale = scaleLinear()
     .domain([0, .2, .20001])

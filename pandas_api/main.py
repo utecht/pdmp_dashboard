@@ -12,19 +12,40 @@ csv_df = pd.read_csv("./final_data.csv").convert_dtypes()
 
 
 @app.get("/chart")
-def get_chart():
+def get_chart(min_age: int = None, max_age: int = None, features: str = None):
+    df = csv_df
+    if min_age != None:
+        df = df[df['Age'] > min_age]
+    if max_age != None:
+        df = df[df['Age'] < max_age]
+    if features != None:
+        for feature in features.split(';'):
+            df = df[df[feature] == 1]
+    return return_chart(df)
+
+@app.get("/map")
+def get_map(min_age: int = None, max_age: int = None, features: str = None):
+    df = csv_df
+    if min_age != None:
+        df = df[df['Age'] > min_age]
+    if max_age != None:
+        df = df[df['Age'] < max_age]
+    if features != None:
+        for feature in features.split(';'):
+            df = df[df[feature] == 1]
+    return return_map(df)
+
+def return_chart(df):
     county_features = (
-        csv_df.set_index("patient_county_name")
+        df.set_index("patient_county_name")
         .loc[:, "high_quant":"male"]
         .groupby("patient_county_name")
         .mean()
     )
     return county_features.transpose().to_json(orient="table")
 
-
-@app.get("/map")
-def get_map():
-    county_risk = csv_df.loc[:, ["patient_county_name", "predicted_probability"]]
+def return_map(df):
+    county_risk = df.loc[:, ["patient_county_name", "predicted_probability"]]
     county_risk["od"] = county_risk["predicted_probability"].ge(0.90)
     ods = (
         county_risk.loc[:, ["patient_county_name", "od"]]
