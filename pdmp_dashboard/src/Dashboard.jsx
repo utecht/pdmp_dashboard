@@ -1,11 +1,19 @@
 import './App.css';
 import ODMap from './ODMap';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import FeatureChart from './FeatureChart';
+import { json } from 'd3-fetch';
 
 
 function Dashboard() {
   const [focusCounties, setFocusCounties] = useState([])
+  const [data, setData] = useState(false)
+
+  useEffect(() => {
+    json("/api/chart").then((data) => {
+      setData(JSON.parse(data));
+    });
+  }, []);
 
   const addFocusCounty = (county) => {
     var newCounties = [...focusCounties]
@@ -26,7 +34,7 @@ function Dashboard() {
           <ODMap focusCounties={focusCounties} setFocus={addFocusCounty} />
         </div>
       </div>
-      <FeatureChart counties={focusCounties} />
+      {data ? <FeatureChart counties={focusCounties} data={data.data} /> : <></>}
     </div>
   );
 }

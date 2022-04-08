@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
 import { scaleLinear } from "d3-scale";
-import { csv } from "d3-fetch";
+import { json } from "d3-fetch";
 
 const geoUrl = "/AR-05-arkansas-counties.json";
 
@@ -9,18 +9,20 @@ const ODMap = (props) => {
   const [data, setData] = useState([]);
 
   useEffect(() => {
-    csv("/od_count_county.csv", (d) => {
-      return {
-        county: d.patient_county_name,
-        od: d.od
-      };
-    }).then(rows => {
-      setData(rows);
+    json("/api/map").then(counties => {
+      var data = [];
+      for(let county of counties){
+        data.push({
+          'county': county['patient_county_name'],
+          'od': county['od']
+        })
+      }
+      setData(data);
     });
   }, []);
 
   const colorScale = scaleLinear()
-    .domain([0, 3, 3.0001])
+    .domain([0, .2, .20001])
     // .domain(data.map(d => d.od))
     .range(['white', 'red', 'black'])
 

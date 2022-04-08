@@ -1,5 +1,4 @@
 import React from "react";
-import FEATURES from './county_features.json';
 
 import {
   BarChart,
@@ -22,7 +21,7 @@ export default function FeatureChart(props) {
   return (
     <ResponsiveContainer width="100%" height={1750 * props.counties.length} >
       <BarChart
-        data={FEATURES.data}
+        data={props.data}
         layout="vertical"
         margin={{
           top: 5,
