@@ -18,10 +18,13 @@ export default function FeatureChart(props) {
     "#33f408",
     "#ff84d8"
   ]
+
+  const data = props.data.filter((row) => props.fields.includes(row.index))
+
   return (
-    <ResponsiveContainer width="100%" height={1750 * (props.counties.length + 1)} >
+    <ResponsiveContainer width="40%" height={(50 * props.fields.length) + (10 * (props.counties.length + 1))} >
       <BarChart
-        data={props.data}
+        data={data}
         layout="vertical"
         margin={{
           top: 5,
@@ -32,7 +35,7 @@ export default function FeatureChart(props) {
       >
         <CartesianGrid />
         <XAxis type="number" allowDataOverflow={true} domain={[0, 1]} />
-        <YAxis dataKey="index" type="category" scale="band" width={200} interval={0} />
+        <YAxis dataKey="index" type="category" scale="band" width={150} interval={0} />
         <Tooltip />
         <Legend verticalAlign="top" />
         <Bar key="Statewide" dataKey="Statewide" fill="#ff0000" isAnimationActive={false} />

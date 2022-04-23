@@ -46,7 +46,7 @@ def return_chart(df):
         .groupby("patient_county_name")
         .mean()
     )
-    statewide = csv_df.set_index("patient_county_name").loc[:, "high_quant":"male"].mean()
+    statewide = df.set_index("patient_county_name").loc[:, "high_quant":"male"].mean()
     all_features = pd.concat([county_features, statewide.to_frame('Statewide').T])
     return all_features.transpose().to_json(orient="table")
 

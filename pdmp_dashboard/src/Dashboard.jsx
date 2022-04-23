@@ -36,8 +36,8 @@ function Dashboard() {
   const handleFilter = (e) => {
     e.preventDefault()
     let newFilter = {}
-    if(minAge !== undefined) newFilter['min_age'] = minAge
-    if(maxAge !== undefined) newFilter['max_age'] = maxAge
+    if(minAge !== undefined && minAge !== '') newFilter['min_age'] = minAge
+    if(maxAge !== undefined && maxAge !== '') newFilter['max_age'] = maxAge
     var newFeatures = [];
     for(let feature of e.target.feature){
       if(feature.checked){
@@ -48,34 +48,55 @@ function Dashboard() {
     setFilters(newFilter)
   }
 
+  const mxFields = ['mx_hydrocodone', 'mx_oxycodone', 'mx_tramadol', 'mx_codeine', 'mx_propoxyphene', 'mx_meperidine', 'mx_hydromorphone', 'mx_morphine', 'mx_fentanyl', 'mx_tapentadol', 'mx_partial', 'mx_semi', 'mx_methadone', 'mx_buprenorphine']
+  const ageFields = ['age010', 'age1120', 'age2130', 'age3140', 'age4150', 'age5160', 'age6170', 'age7180', 'age8190', 'age91above']
+
   return (
     <div className="container">
-      <form onSubmit={handleFilter}>
-        <label>
-          Min Age:
-          <input type="number" value={minAge} onChange={(e) => setMinAge(e.target.value)}/>
-        </label>
-        <label>
-          Max Age:
-          <input type="number" value={maxAge} onChange={(e) => setMaxAge(e.target.value)}/>
-        </label>
-        <label>
-          x_opioid_benzo
-          <input type="checkbox" value="x_opioid_benzo" name="feature" />
-        </label>
-        <label>
-          avgmme_gt90
-          <input type="checkbox" value="avgmme_gt90" name="feature" />
-        </label>
-        <input type="submit" value="Filter" />
-      </form>
-      <p>Record count: {count}</p>
+      <div className="row">
+        <h3 className="col-sm-4">Record count: {count}</h3>
+        <form onSubmit={handleFilter} className="col-sm-8">
+          <div className="form-group row">
+            <label htmlFor="minAgeInput" className="col-sm-2 col-form-label">Min Age:</label>
+            <div className="col-sm-4">
+              <input className="form-control" id="minAgeInput" type="number" value={minAge} onChange={(e) => setMinAge(e.target.value)}/>
+            </div>
+          </div>
+          <div className="form-group row">
+            <label htmlFor="maxAgeInput" className="col-sm-2 col-form-label">Max Age:</label>
+            <div className="col-sm-4">
+              <input className="form-control" id="maxAgeInput" type="number" value={maxAge} onChange={(e) => setMaxAge(e.target.value)}/>
+            </div>
+          </div>
+          <div className="form-group row">
+            <div className="col-sm-2">Features</div>
+            <div className="col-sm-10">
+              <div className="form-check">
+                <label className="form-check-label col-form-label col-sm-2">
+                  x_opioid_benzo
+                  <input className="form-check-input" type="checkbox" value="x_opioid_benzo" name="feature" />
+                </label>
+              </div>
+              <div className="form-check">
+                <label className="form-check-label col-form-label col-sm-2">
+                  avgmme_gt90
+                  <input className="form-check-input" type="checkbox" value="avgmme_gt90" name="feature" />
+                </label>
+              </div>
+            </div>
+          </div>
+          <input className="btn btn-primary" type="submit" value="Filter" />
+        </form>
+        </div>
       <div style={{display: 'flex', justifyContent: 'space-around'}}>
         <div style={{width:'400px', height:'400px'}}>
           <ODMap focusCounties={focusCounties} setFocus={addFocusCounty} filters={filters} />
         </div>
       </div>
-      {data ? <FeatureChart counties={focusCounties} data={data.data} /> : <></>}
+      <div style={{display: 'flex'}}>
+        {data ? <FeatureChart counties={focusCounties} data={data.data} fields={mxFields} title="Drug Types"/> : <></>}
+        {data ? <FeatureChart counties={focusCounties} data={data.data} fields={ageFields} title="Ages"/> : <></>}
+      </div>
     </div>
   );
 }
