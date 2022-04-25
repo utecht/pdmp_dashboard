@@ -1,7 +1,7 @@
 import './App.css';
 import ODMap from './ODMap';
 import React, { useState, useEffect } from "react";
-import FeatureChart from './FeatureChart';
+import CountyChart from './CountyChart';
 import { json } from 'd3-fetch';
 
 
@@ -11,6 +11,7 @@ function Dashboard() {
   const [count, setCount] = useState(undefined)
   const [minAge, setMinAge] = useState(undefined)
   const [maxAge, setMaxAge] = useState(undefined)
+  const [riskScore, setRiskScore] = useState(undefined)
   const [filters, setFilters] = useState({})
 
   useEffect(() => {
@@ -38,6 +39,7 @@ function Dashboard() {
     let newFilter = {}
     if(minAge !== undefined && minAge !== '') newFilter['min_age'] = minAge
     if(maxAge !== undefined && maxAge !== '') newFilter['max_age'] = maxAge
+    if(riskScore !== undefined && riskScore !== '') newFilter['risk_score'] = riskScore
     var newFeatures = [];
     for(let feature of e.target.feature){
       if(feature.checked){
@@ -50,6 +52,8 @@ function Dashboard() {
 
   const mxFields = ['mx_hydrocodone', 'mx_oxycodone', 'mx_tramadol', 'mx_codeine', 'mx_propoxyphene', 'mx_meperidine', 'mx_hydromorphone', 'mx_morphine', 'mx_fentanyl', 'mx_tapentadol', 'mx_partial', 'mx_semi', 'mx_methadone', 'mx_buprenorphine']
   const ageFields = ['age010', 'age1120', 'age2130', 'age3140', 'age4150', 'age5160', 'age6170', 'age7180', 'age8190', 'age91above']
+  const mmeFields = ['avg_mme','max_daily_mme']
+  const sumDrugs = ['sum_hydrocodone','sum_oxycodone','sum_tramadol','sum_codeine','sum_propoxyphene','sum_meperidine','sum_hydromorphone','sum_morphine','sum_fentanyl','sum_tapentadol','sum_partial','sum_semi','sum_methadone','sum_buprenorphine','sum_benzo','sum_smr','sum_hypno','sum_pregaba']
 
   return (
     <div className="container">
@@ -85,6 +89,12 @@ function Dashboard() {
               </div>
             </div>
           </div>
+          <div className="form-group row">
+            <label htmlFor="maxAgeInput" className="col-sm-2 col-form-label">Risk Score:</label>
+            <div className="col-sm-4">
+              <input className="form-control" id="maxAgeInput" type="decimal" value={riskScore} onChange={(e) => setRiskScore(e.target.value)}/>
+            </div>
+          </div>
           <input className="btn btn-primary" type="submit" value="Filter" />
         </form>
         </div>
@@ -94,8 +104,10 @@ function Dashboard() {
         </div>
       </div>
       <div style={{display: 'flex'}}>
-        {data ? <FeatureChart counties={focusCounties} data={data.data} fields={mxFields} title="Drug Types"/> : <></>}
-        {data ? <FeatureChart counties={focusCounties} data={data.data} fields={ageFields} title="Ages"/> : <></>}
+        {data ? <CountyChart counties={focusCounties} data={data.data} fields={mxFields} title="Drug Types"/> : <></>}
+        {data ? <CountyChart counties={focusCounties} data={data.data} fields={ageFields} title="Ages"/> : <></>}
+        {data ? <CountyChart counties={focusCounties} data={data.data} fields={mmeFields} title="MME"/> : <></>}
+        {data ? <CountyChart counties={focusCounties} data={data.data} fields={sumDrugs} title="Drug Sums"/> : <></>}
       </div>
     </div>
   );

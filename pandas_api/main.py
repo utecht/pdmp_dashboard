@@ -12,12 +12,14 @@ csv_df = pd.read_csv("./final_data.csv").convert_dtypes()
 
 
 @app.get("/chart")
-def get_chart(min_age: int = None, max_age: int = None, features: str = None):
+def get_chart(min_age: int = None, max_age: int = None, features: str = None, risk_score: float = None):
     df = csv_df
     if min_age != None:
         df = df[df['Age'] > min_age]
     if max_age != None:
         df = df[df['Age'] < max_age]
+    if risk_score != None:
+        df = df[df['predicted_probability'] >= risk_score]
     if features != None:
         for feature in features.split(';'):
             if feature != '':
@@ -38,6 +40,14 @@ def get_map(min_age: int = None, max_age: int = None, features: str = None):
             if feature != '':
                 df = df[df[feature] == 1]
     return return_map(df)
+
+@app.get("/feature")
+def get_feature(feature: str = None):
+    df = csv_df
+    if(feature != None):
+        df = df[df[feature] == 1]
+    df = df.loc[:, "high_quant":"male"].mean()
+    return df.to_json()
 
 def return_chart(df):
     county_features = (
@@ -62,5 +72,7 @@ def return_map(df):
     counts = ods[ods["od"]].set_index("patient_county_name")["percent"].mul(100)
     return counts.to_frame("od").reset_index().to_dict(orient="records")
 
+def return_feature(df, feature):
+    pass
 
 # add filters, and return either chart or map

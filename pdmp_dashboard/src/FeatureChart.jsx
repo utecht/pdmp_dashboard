@@ -19,12 +19,27 @@ export default function FeatureChart(props) {
     "#ff84d8"
   ]
 
-  const data = props.data.filter((row) => props.fields.includes(row.index))
+  var data = {}
+  for(let key in props.data){
+    for(let row in props.data[key]) {
+      if(!(row in data)){
+        data[row] = {}
+      }
+      data[row][key] = props.data[key][row]
+      data[row]['index'] = row
+    }
+  }
+  var dataArray = []
+  for(let row in data){
+    if(props.fields.includes(row)){
+      dataArray.push(data[row])
+    }
+  }
 
   return (
-    <ResponsiveContainer width="40%" height={(50 * props.fields.length) + (10 * (props.counties.length + 1))} >
+    <ResponsiveContainer width="40%" height={(50 * props.fields.length) + (10 * (props.features.length + 1))} >
       <BarChart
-        data={data}
+        data={dataArray}
         layout="vertical"
         margin={{
           top: 5,
@@ -34,12 +49,12 @@ export default function FeatureChart(props) {
         }}
       >
         <CartesianGrid />
-        <XAxis type="number" allowDataOverflow={true} domain={[0, 1]} />
+        <XAxis type="number" allowDataOverflow={true} />
         <YAxis dataKey="index" type="category" scale="band" width={150} interval={0} />
         <Tooltip />
         <Legend verticalAlign="top" />
-        <Bar key="Statewide" dataKey="Statewide" fill="#ff0000" isAnimationActive={false} />
-        { props.counties.map((county, i) => <Bar key={county} dataKey={county} fill={colors[i % colors.length]} isAnimationActive={false} /> ) }
+        <Bar key="All" dataKey="All" fill="#ff0000" isAnimationActive={false} />
+        { props.features.map((feature, i) => <Bar key={feature} dataKey={feature} fill={colors[i % colors.length]} isAnimationActive={false} /> ) }
       </BarChart>
     </ResponsiveContainer>
   );
