@@ -35,7 +35,7 @@ function ChartPage() {
     }
   }
 
-  const features = ['mx_hydrocodone', 'mx_oxycodone', 'mx_tramadol', 'mx_codeine', 'mx_propoxyphene', 'mx_meperidine', 'mx_hydromorphone', 'mx_morphine', 'mx_fentanyl', 'mx_tapentadol', 'mx_partial', 'mx_semi', 'mx_methadone', 'mx_buprenorphine', 'avgmme_gt90', 'x_opioid_benzo']
+  const features = ['mx_hydrocodone', 'mx_oxycodone', 'mx_tramadol', 'mx_codeine', 'mx_propoxyphene', 'mx_meperidine', 'mx_hydromorphone', 'mx_morphine', 'mx_fentanyl', 'mx_tapentadol', 'mx_partial', 'mx_semi', 'mx_methadone', 'mx_buprenorphine', 'avgmme_gt90', 'x_opioid_benzo', 'x_opioid_smr', 'x_benzo_smr', 'x_opioid_benzo_smr', 'mx_cash']
 
   const mxFields = ['mx_hydrocodone', 'mx_oxycodone', 'mx_tramadol', 'mx_codeine', 'mx_propoxyphene', 'mx_meperidine', 'mx_hydromorphone', 'mx_morphine', 'mx_fentanyl', 'mx_tapentadol', 'mx_partial', 'mx_semi', 'mx_methadone', 'mx_buprenorphine']
   const ageFields = ['age010', 'age1120', 'age2130', 'age3140', 'age4150', 'age5160', 'age6170', 'age7180', 'age8190', 'age91above']
@@ -44,8 +44,8 @@ function ChartPage() {
 
   return (
     <div className="container">
+      <h3 className="col-sm-4">Features</h3>
       <div className="row">
-        <h3 className="col-sm-4">Features</h3>
         {features.map(
           (field) =>
           <input

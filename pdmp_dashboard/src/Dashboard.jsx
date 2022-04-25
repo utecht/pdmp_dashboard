@@ -58,44 +58,46 @@ function Dashboard() {
   return (
     <div className="container">
       <div className="row">
-        <h3 className="col-sm-4">Record count: {count}</h3>
-        <form onSubmit={handleFilter} className="col-sm-8">
-          <div className="form-group row">
-            <label htmlFor="minAgeInput" className="col-sm-2 col-form-label">Min Age:</label>
-            <div className="col-sm-4">
-              <input className="form-control" id="minAgeInput" type="number" value={minAge} onChange={(e) => setMinAge(e.target.value)}/>
-            </div>
-          </div>
-          <div className="form-group row">
-            <label htmlFor="maxAgeInput" className="col-sm-2 col-form-label">Max Age:</label>
-            <div className="col-sm-4">
-              <input className="form-control" id="maxAgeInput" type="number" value={maxAge} onChange={(e) => setMaxAge(e.target.value)}/>
-            </div>
-          </div>
-          <div className="form-group row">
-            <div className="col-sm-2">Features</div>
-            <div className="col-sm-10">
-              <div className="form-check">
-                <label className="form-check-label col-form-label col-sm-2">
-                  x_opioid_benzo
-                  <input className="form-check-input" type="checkbox" value="x_opioid_benzo" name="feature" />
-                </label>
+        <div className="row">
+          <h3 className="col-sm-3">Record count: {count}</h3>
+        </div>
+        <form onSubmit={handleFilter} className="row">
+          <div className="col-sm-4">
+            <div className="form-group row">
+              <label htmlFor="minAgeInput" className="col-sm-2 col-form-label">Min Age:</label>
+              <div className="col-sm-4">
+                <input className="form-control" id="minAgeInput" type="number" value={minAge} onChange={(e) => setMinAge(e.target.value)}/>
               </div>
-              <div className="form-check">
-                <label className="form-check-label col-form-label col-sm-2">
-                  avgmme_gt90
-                  <input className="form-check-input" type="checkbox" value="avgmme_gt90" name="feature" />
-                </label>
+            </div>
+            <div className="form-group row">
+              <label htmlFor="maxAgeInput" className="col-sm-2 col-form-label">Max Age:</label>
+              <div className="col-sm-4">
+                <input className="form-control" id="maxAgeInput" type="number" value={maxAge} onChange={(e) => setMaxAge(e.target.value)}/>
               </div>
             </div>
           </div>
-          <div className="form-group row">
+          <div className="form-group col-sm-4">
+            <span>Features</span>
+            <div className="form-check">
+              <label className="form-check-label col-form-label col-sm-2">
+                x_opioid_benzo
+                <input className="form-check-input" type="checkbox" value="x_opioid_benzo" name="feature" />
+              </label>
+            </div>
+            <div className="form-check">
+              <label className="form-check-label col-form-label col-sm-2">
+                avgmme_gt90
+                <input className="form-check-input" type="checkbox" value="avgmme_gt90" name="feature" />
+              </label>
+            </div>
+          </div>
+          <div className="form-group col-sm-4 row">
             <label htmlFor="maxAgeInput" className="col-sm-2 col-form-label">Risk Score:</label>
-            <div className="col-sm-4">
-              <input className="form-control" id="maxAgeInput" type="decimal" value={riskScore} onChange={(e) => setRiskScore(e.target.value)}/>
+            <div className="col-sm-6">
+              <input className="form-control" id="maxAgeInput" type="number" step="0.001" value={riskScore} onChange={(e) => setRiskScore(e.target.value)}/>
             </div>
           </div>
-          <input className="btn btn-primary" type="submit" value="Filter" />
+          <input className="btn btn-primary col-sm-2" type="submit" value="Filter" />
         </form>
         </div>
       <div style={{display: 'flex', justifyContent: 'space-around'}}>
