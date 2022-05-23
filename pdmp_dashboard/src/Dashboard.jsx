@@ -66,41 +66,39 @@ function Dashboard() {
   const ge2Drugs = ['hydrocodone_ge2','oxycodone_ge2','tramadol_ge2','codeine_ge2','propoxyphene_ge2','meperidine_ge2','hydromorphone_ge2','morphine_ge2','fentanyl_ge2','tapentadol_ge2','partial_ge2','semi_ge2']
   const drugsDS = ['hydrocodone_ds','oxycodone_ds','tramadol_ds','codeine_ds','propoxyphene_ds','meperidine_ds','hydromorphone_ds','morphine_ds','fentanyl_ds','tapentadol_ds','partial_ds','semi_ds']
 
+  const features = ['x_opioid_benzo', 'avgmme_gt90', 'mx_cash']
+
   return (
     <div className="container">
       <div className="row">
         <form onSubmit={handleFilter} className="row">
           <div className="col-sm-4">
-            <div className="form-group row">
-              <label htmlFor="minAgeInput" className="col-sm-2 col-form-label">Min Age:</label>
-              <div className="col-sm-4">
+            <h5>Age Restriction</h5>
+            <div className="row mb-2">
+              <label htmlFor="minAgeInput" className="col-sm-3 col-form-label">Min Age:</label>
+              <div className="col-sm-5">
                 <input className="form-control" id="minAgeInput" type="number" value={minAge} onChange={(e) => setMinAge(e.target.value)}/>
               </div>
             </div>
-            <div className="form-group row">
-              <label htmlFor="maxAgeInput" className="col-sm-2 col-form-label">Max Age:</label>
-              <div className="col-sm-4">
+            <div className="row mb-2">
+              <label htmlFor="maxAgeInput" className="col-sm-3 col-form-label">Max Age:</label>
+              <div className="col-sm-5">
                 <input className="form-control" id="maxAgeInput" type="number" value={maxAge} onChange={(e) => setMaxAge(e.target.value)}/>
               </div>
             </div>
           </div>
           <div className="form-group col-sm-4">
-            <span>Features</span>
-            <div className="form-check">
-              <label className="form-check-label col-form-label col-sm-2">
-                x_opioid_benzo
-                <input className="form-check-input" type="checkbox" value="x_opioid_benzo" name="feature" />
-              </label>
-            </div>
-            <div className="form-check">
-              <label className="form-check-label col-form-label col-sm-2">
-                avgmme_gt90
-                <input className="form-check-input" type="checkbox" value="avgmme_gt90" name="feature" />
-              </label>
-            </div>
+            <h5>Features</h5>
+            {features.map((feature) => (
+              <div className="form-check">
+                <input className="form-check-input" type="checkbox" value={feature} name="feature" />
+                <label className="form-check-label">{feature}</label>
+              </div>
+            ))}
           </div>
-          <div className="form-group col-sm-4 row">
-            <label htmlFor="maxAgeInput" className="col-sm-2 col-form-label">Risk Score:</label>
+          <div className="col-sm-4 row">
+            <h5>Risk Cutoff</h5>
+            <label htmlFor="maxAgeInput" className="col-sm-4 col-form-label">Risk Score:</label>
             <div className="col-sm-6">
               <input className="form-control" id="maxAgeInput" type="number" step="0.001" value={riskScore} onChange={(e) => setRiskScore(e.target.value)}/>
             </div>
@@ -108,7 +106,7 @@ function Dashboard() {
           <input className="btn btn-primary col-sm-2" type="submit" value="Filter" />
           <button className="btn btn-secondary col-sm-2" onClick={()=>resetFilter()}>Reset</button>
         </form>
-        <div className="row">
+        <div className="row mt-5">
           <h3 className="col-sm-3">Record count: {count}</h3>
         </div>
       </div>
