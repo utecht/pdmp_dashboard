@@ -3,6 +3,7 @@ import ODMap from './ODMap';
 import React, { useState, useEffect } from "react";
 import CountyChart from './CountyChart';
 import { json } from 'd3-fetch';
+import ReactTooltip from "react-tooltip";
 
 
 function Dashboard() {
@@ -13,6 +14,7 @@ function Dashboard() {
   const [maxAge, setMaxAge] = useState(undefined)
   const [riskScore, setRiskScore] = useState(undefined)
   const [filters, setFilters] = useState({})
+  const [content, setContent] = useState("")
 
   useEffect(() => {
     let params = new URLSearchParams(filters).toString()
@@ -90,7 +92,7 @@ function Dashboard() {
           <div className="form-group col-sm-4">
             <h5>Features</h5>
             {features.map((feature) => (
-              <div className="form-check">
+              <div className="form-check" key={feature}>
                 <input className="form-check-input" type="checkbox" value={feature} name="feature" />
                 <label className="form-check-label">{feature}</label>
               </div>
@@ -112,7 +114,8 @@ function Dashboard() {
       </div>
       <div style={{display: 'flex', justifyContent: 'space-around'}}>
         <div style={{width:'400px', height:'400px'}}>
-          <ODMap focusCounties={focusCounties} setFocus={addFocusCounty} filters={filters} />
+          <ODMap focusCounties={focusCounties} setFocus={addFocusCounty} filters={filters} setTooltipContent={setContent} />
+          <ReactTooltip>{content}</ReactTooltip>
         </div>
       </div>
       <div style={{display: 'flex', flexWrap: 'wrap'}}>

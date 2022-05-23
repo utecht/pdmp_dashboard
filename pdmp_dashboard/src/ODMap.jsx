@@ -35,7 +35,7 @@ const ODMap = (props) => {
 
   return (
     <>
-    <ComposableMap projection="geoAlbers" projectionConfig={projectionConfig}>
+    <ComposableMap data-tip="" projection="geoAlbers" projectionConfig={projectionConfig}>
       <Geographies geography={geoUrl}>
         {({ geographies }) =>
           geographies.map(geo => {
@@ -48,6 +48,12 @@ const ODMap = (props) => {
                 stroke={props.focusCounties.indexOf(geo.properties.NAME) >= 0 ? '#000': '#222'}
                 strokeWidth={props.focusCounties.indexOf(geo.properties.NAME) >= 0 ? 2.5: .5}
                 onClick={() => props.setFocus(geo.properties.NAME)}
+                onMouseEnter={() => {
+                    props.setTooltipContent(`${geo.properties.NAME} — ${cur.od.toFixed(2)}`)
+                  }}
+                  onMouseLeave={() => {
+                    props.setTooltipContent("");
+                  }}
               />
             );
           })
