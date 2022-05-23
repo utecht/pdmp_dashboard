@@ -50,17 +50,25 @@ function Dashboard() {
     setFilters(newFilter)
   }
 
+  const resetFilter = () => {
+    document.querySelectorAll('input[type=checkbox]').forEach(el => el.checked = false)
+    let newFilter = {}
+    setMinAge(undefined)
+    setMaxAge(undefined)
+    setRiskScore(undefined)
+    setFilters(newFilter)
+  }
+
   const mxFields = ['mx_hydrocodone', 'mx_oxycodone', 'mx_tramadol', 'mx_codeine', 'mx_propoxyphene', 'mx_meperidine', 'mx_hydromorphone', 'mx_morphine', 'mx_fentanyl', 'mx_tapentadol', 'mx_partial', 'mx_semi', 'mx_methadone', 'mx_buprenorphine']
   const ageFields = ['age010', 'age1120', 'age2130', 'age3140', 'age4150', 'age5160', 'age6170', 'age7180', 'age8190', 'age91above']
   const mmeFields = ['avg_mme','max_daily_mme']
   const sumDrugs = ['sum_hydrocodone','sum_oxycodone','sum_tramadol','sum_codeine','sum_propoxyphene','sum_meperidine','sum_hydromorphone','sum_morphine','sum_fentanyl','sum_tapentadol','sum_partial','sum_semi','sum_methadone','sum_buprenorphine','sum_benzo','sum_smr','sum_hypno','sum_pregaba']
+  const ge2Drugs = ['hydrocodone_ge2','oxycodone_ge2','tramadol_ge2','codeine_ge2','propoxyphene_ge2','meperidine_ge2','hydromorphone_ge2','morphine_ge2','fentanyl_ge2','tapentadol_ge2','partial_ge2','semi_ge2']
+  const drugsDS = ['hydrocodone_ds','oxycodone_ds','tramadol_ds','codeine_ds','propoxyphene_ds','meperidine_ds','hydromorphone_ds','morphine_ds','fentanyl_ds','tapentadol_ds','partial_ds','semi_ds']
 
   return (
     <div className="container">
       <div className="row">
-        <div className="row">
-          <h3 className="col-sm-3">Record count: {count}</h3>
-        </div>
         <form onSubmit={handleFilter} className="row">
           <div className="col-sm-4">
             <div className="form-group row">
@@ -98,18 +106,24 @@ function Dashboard() {
             </div>
           </div>
           <input className="btn btn-primary col-sm-2" type="submit" value="Filter" />
+          <button className="btn btn-secondary col-sm-2" onClick={()=>resetFilter()}>Reset</button>
         </form>
+        <div className="row">
+          <h3 className="col-sm-3">Record count: {count}</h3>
         </div>
+      </div>
       <div style={{display: 'flex', justifyContent: 'space-around'}}>
         <div style={{width:'400px', height:'400px'}}>
           <ODMap focusCounties={focusCounties} setFocus={addFocusCounty} filters={filters} />
         </div>
       </div>
-      <div style={{display: 'flex'}}>
-        {data ? <CountyChart counties={focusCounties} data={data.data} fields={mxFields} title="Drug Types"/> : <></>}
-        {data ? <CountyChart counties={focusCounties} data={data.data} fields={ageFields} title="Ages"/> : <></>}
-        {data ? <CountyChart counties={focusCounties} data={data.data} fields={mmeFields} title="MME"/> : <></>}
-        {data ? <CountyChart counties={focusCounties} data={data.data} fields={sumDrugs} title="Drug Sums"/> : <></>}
+      <div style={{display: 'flex', flexWrap: 'wrap'}}>
+        {data ? <CountyChart counties={focusCounties} data={data.data} fields={mxFields} percent={true} title="Prescription Types"/> : <></>}
+        {data ? <CountyChart counties={focusCounties} data={data.data} fields={ageFields} percent={true} title="Ages"/> : <></>}
+        {data ? <CountyChart counties={focusCounties} data={data.data} fields={mmeFields} percent={false} title="MME"/> : <></>}
+        {data ? <CountyChart counties={focusCounties} data={data.data} fields={sumDrugs} percent={false} title="Prescription Count"/> : <></>}
+        {data ? <CountyChart counties={focusCounties} data={data.data} fields={ge2Drugs} percent={true} title=">2 prescriptions"/> : <></>}
+        {data ? <CountyChart counties={focusCounties} data={data.data} fields={drugsDS} percent={true} title="Days Supply"/> : <></>}
       </div>
     </div>
   );
