@@ -15,8 +15,8 @@ export default function FeatureChart(props) {
   const colors = [
     "#0084d8",
     "#aa84d8",
-    "#33f408",
-    "#ff84d8"
+    "#26a86c",
+    "#dc3545"
   ]
 
   var data = {}
