@@ -1,5 +1,5 @@
 import './App.css';
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -86,6 +86,34 @@ function BxUploadIcon(props) {
 
 
 function App() {
+  const [logged, setLogged] = useState(false)
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+
+  function login(){
+    console.log(password);
+    if(password === 'pdmp_dashboard'){
+      setLogged(true);
+    } else {
+      setPassword('');
+      setError('Wrong password');
+    }
+  }
+
+  if(logged === false || password ==! 'pdmp_dashboard'){
+    return(
+      <div className="container row justify-content-center">
+        <div className="card col-5 mt-5">
+          <h4>{error}</h4>
+          <div className="form-outline mt-4 mb-4">
+            <input type="password" className="form-control" onChange={(e) => setPassword(e.target.value)} />
+            <label className="form-label" htmlFor="form2Example2">Password</label>
+          </div>
+          <button type="button" className="btn btn-primary btn-block mb-4" onClick={()=>login()}>Login</button>
+        </div>
+      </div>
+      );
+  }
 
   return (
     <Router>
