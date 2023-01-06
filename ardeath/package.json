@@ -18,7 +18,7 @@
   "devDependencies": {
     "eslint": "^6.0.1",
     "eslint-config-synacor": "^3.0.4",
-    "preact-cli": "^3.0.0-rc.6",
+    "preact-cli": "^3.4.3",
     "sirv-cli": "^0.4.5"
   },
   "dependencies": {
